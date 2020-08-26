@@ -8,82 +8,105 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FatturaElettronica.Extensions.Resources {
+namespace FatturaElettronica.Extensions.Resources
+{
     using System;
-    
-    
+    using System.Reflection;
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ErrorMessages {
-        
+    public class ErrorMessages
+    {
+
         private static System.Resources.ResourceManager resourceMan;
-        
+
         private static System.Globalization.CultureInfo resourceCulture;
-        
+
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ErrorMessages() {
+        internal ErrorMessages()
+        {
         }
-        
+
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static System.Resources.ResourceManager ResourceManager {
-            get {
-                if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("FatturaElettronica.Extensions.Resources.ErrorMessages", typeof(ErrorMessages).Assembly);
+        public static System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.Equals(null, resourceMan))
+                {
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("FatturaElettronica.Extensions.Resources.ErrorMessages", typeof(ErrorMessages).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-        
+
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static System.Globalization.CultureInfo Culture {
-            get {
+        public static System.Globalization.CultureInfo Culture
+        {
+            get
+            {
                 return resourceCulture;
             }
-            set {
+            set
+            {
                 resourceCulture = value;
             }
         }
-        
-        public static string FirmaException {
-            get {
+
+        public static string FirmaException
+        {
+            get
+            {
                 return ResourceManager.GetString("FirmaException", resourceCulture);
             }
         }
-        
-        public static string IdCodiceIsMissing {
-            get {
+
+        public static string IdCodiceIsMissing
+        {
+            get
+            {
                 return ResourceManager.GetString("IdCodiceIsMissing", resourceCulture);
             }
         }
-        
-        public static string IdFiscaleIsMissing {
-            get {
+
+        public static string IdFiscaleIsMissing
+        {
+            get
+            {
                 return ResourceManager.GetString("IdFiscaleIsMissing", resourceCulture);
             }
         }
-        
-        public static string IdPaeseIsWrongOrMissing {
-            get {
+
+        public static string IdPaeseIsWrongOrMissing
+        {
+            get
+            {
                 return ResourceManager.GetString("IdPaeseIsWrongOrMissing", resourceCulture);
             }
         }
-        
-        public static string PfxIsMissing {
-            get {
+
+        public static string PfxIsMissing
+        {
+            get
+            {
                 return ResourceManager.GetString("PfxIsMissing", resourceCulture);
             }
         }
-        
-        public static string ProgressivoOverflow {
-            get {
+
+        public static string ProgressivoOverflow
+        {
+            get
+            {
                 return ResourceManager.GetString("ProgressivoOverflow", resourceCulture);
             }
         }
-        
-        public static string SignatureException {
-            get {
+
+        public static string SignatureException
+        {
+            get
+            {
                 return ResourceManager.GetString("SignatureException", resourceCulture);
             }
         }

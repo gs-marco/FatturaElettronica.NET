@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard1.2</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>3.0.3</Version>
     <PackageId>FatturaElettronica</PackageId>
@@ -17,9 +17,9 @@
     <LangVersion>8</LangVersion>
   </PropertyGroup>
 
-<ItemGroup>
+  <ItemGroup>
     <None Include="LICENSE.txt" Pack="true" PackagePath="" />
-</ItemGroup>
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Tests\**" />
@@ -31,11 +31,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="9.0" />
+    <Compile Remove="Extensions\HtmlExtensions.cs" />
+    <Compile Remove="Extensions\SignedFileExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.6.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="Portable.BouncyCastle" Version="1.8.6.7" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="4.7.0" />
-    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" Condition="$(TargetFramework) == 'netstandard1.1'" />
+    <!--<PackageReference Include="Portable.BouncyCastle" Version="1.8.6.7" />-->
+    <!--<PackageReference Include="System.Security.Cryptography.Pkcs" Version="4.7.0" />-->
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
 
 </Project>

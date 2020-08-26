@@ -4,7 +4,6 @@ using System.Xml;
 using FatturaElettronica.Defaults;
 using FatturaElettronica.Extensions;
 using FatturaElettronica.Ordinaria;
-using Org.BouncyCastle.Cms;
 using BaseClassSerializable = FatturaElettronica.Core.BaseClassSerializable;
 
 namespace FatturaElettronica
@@ -37,15 +36,15 @@ namespace FatturaElettronica
 
         public static FatturaBase CreateInstanceFromXml(Stream stream, bool validateSignature = false)
         {
-            try
-            {
-                return CreateInstanceFromPlainXml(stream);
-            }
-            catch (XmlException)
-            {
-                stream.Position = 0;
-                return CreateInstanceFromXmlSigned(stream, validateSignature);
-            }
+            //try
+            //{
+            return CreateInstanceFromPlainXml(stream);
+            //}
+            //catch (XmlException)
+            //{
+            //    stream.Position = 0;
+            //    return CreateInstanceFromXmlSigned(stream, validateSignature);
+            //}
         }
 
         private static FatturaBase CreateInstanceFromPlainXml(Stream stream)
@@ -54,7 +53,9 @@ namespace FatturaElettronica
             using (var r = XmlReader.Create(stream,
                 new XmlReaderSettings
                 {
-                    IgnoreWhitespace = true, IgnoreComments = true, IgnoreProcessingInstructions = true
+                    IgnoreWhitespace = true,
+                    IgnoreComments = true,
+                    IgnoreProcessingInstructions = true
                 }))
             {
                 while (r.Read() && !r.LocalName.Contains("Fattura"))
@@ -76,7 +77,9 @@ namespace FatturaElettronica
             using (var r = XmlReader.Create(stream,
                 new XmlReaderSettings
                 {
-                    IgnoreWhitespace = true, IgnoreComments = true, IgnoreProcessingInstructions = true
+                    IgnoreWhitespace = true,
+                    IgnoreComments = true,
+                    IgnoreProcessingInstructions = true
                 }))
             {
                 ret.ReadXml(r);
@@ -88,19 +91,20 @@ namespace FatturaElettronica
         private static FatturaBase CreateInstanceFromXmlSigned(Stream stream,
             bool validateSignature = true)
         {
-            try
-            {
-                using var parsed = SignedFileExtensions.ParseSignature(stream, validateSignature);
-                var newStream = new MemoryStream();
-                parsed.WriteTo(newStream);
-                newStream.Position = 0;
-                return CreateInstanceFromXml(newStream);
-            }
-            catch (CmsException)
-            {
-                stream.Position = 0;
-                return CreateInstanceFromXmlSignedBase64(stream, validateSignature);
-            }
+            throw new NotImplementedException();
+            //try
+            //{
+            //    using var parsed = SignedFileExtensions.ParseSignature(stream, validateSignature);
+            //    var newStream = new MemoryStream();
+            //    parsed.WriteTo(newStream);
+            //    newStream.Position = 0;
+            //    return CreateInstanceFromXml(newStream);
+            //}
+            //catch (CmsException)
+            //{
+            //    stream.Position = 0;
+            //    return CreateInstanceFromXmlSignedBase64(stream, validateSignature);
+            //}
         }
 
         private static FatturaBase CreateInstanceFromXmlSignedBase64(Stream stream,
