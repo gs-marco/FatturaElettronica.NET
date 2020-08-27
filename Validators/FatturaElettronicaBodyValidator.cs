@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FatturaElettronica.Ordinaria.FatturaElettronicaBody;
+using System.Linq;
 using FluentValidation;
 
 namespace FatturaElettronica.Validators
@@ -43,6 +44,9 @@ namespace FatturaElettronica.Validators
                 .SetValidator(new DatiPagamentoValidator());
             RuleForEach(x => x.Allegati)
                 .SetValidator(new AllegatiValidator());
+            RuleFor(x => x.DatiGenerali.DatiGeneraliDocumento.ImportoTotaleDocumento ?? 0)
+                .Must((body, _) => ImportoTotaleDocumentoAgainstDatiRiepilogo(body))
+                .WithMessage(body => $"ImportoTotaleDocumento ({body.DatiGenerali.DatiGeneraliDocumento.ImportoTotaleDocumento ?? 0}) non quadra con DatiRiepilogo ({SommaDatiRiepilogo(body)}) + Arrotondamento ({body.DatiGenerali.DatiGeneraliDocumento.Arrotondamento ?? 0})");
         }
 
         private bool DatiRitenutaAgainstDettaglioLinee(FatturaElettronicaBody body)
@@ -107,6 +111,16 @@ namespace FatturaElettronica.Validators
             }
 
             return body.DatiBeniServizi.DatiRiepilogo.Count >= hash.Count;
+        }
+
+        private bool ImportoTotaleDocumentoAgainstDatiRiepilogo(FatturaElettronicaBody body)
+        {
+            return (body.DatiGenerali.DatiGeneraliDocumento.ImportoTotaleDocumento ?? 0) == SommaDatiRiepilogo(body) + (body.DatiGenerali.DatiGeneraliDocumento.Arrotondamento ?? 0);
+        }
+
+        private decimal SommaDatiRiepilogo(FatturaElettronicaBody body)
+        {
+            return body.DatiBeniServizi.DatiRiepilogo.Sum(r => r.ImponibileImporto + r.Imposta);
         }
 
         internal class Totals
