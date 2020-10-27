@@ -36,7 +36,14 @@ namespace FatturaElettronica.Validators
                 .When(x => x.ContattiTrasmittente != null && !x.ContattiTrasmittente.IsEmpty());
             RuleFor(dt => dt.PECDestinatario)
                 .Length(7, 256)
-                .When(x => !string.IsNullOrEmpty(x.PECDestinatario));
+                .WithMessage("PECDestinatario deve avere lunghezza compresa tra 7 e 256 caratteri")
+                .WithErrorCode("00426");
+            RuleFor(dt => dt.PECDestinatario)
+                //.EmailAddress()
+                .Must(pec => !(pec.StartsWith("sdi") && pec.EndsWith("@pec.fatturapa.it")))
+                .When(x => !string.IsNullOrEmpty(x.PECDestinatario))
+                .WithMessage("PECDestinatario non valida")
+                .WithErrorCode("00426");
         }
     }
 }

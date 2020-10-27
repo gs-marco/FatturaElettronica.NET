@@ -9,6 +9,8 @@ namespace FatturaElettronica.Validators
 {
     public class FatturaElettronicaBodyValidator : AbstractValidator<FatturaElettronicaBody>
     {
+        private static DateTime _20210101 = new DateTime(2021, 1, 1);
+
         public FatturaElettronicaBodyValidator()
         {
             RuleFor(x => x.DatiGenerali)
@@ -47,6 +49,43 @@ namespace FatturaElettronica.Validators
             RuleFor(x => x.DatiGenerali.DatiGeneraliDocumento.ImportoTotaleDocumento ?? 0)
                 .Must((body, _) => ImportoTotaleDocumentoAgainstDatiRiepilogo(body))
                 .WithMessage(body => $"ImportoTotaleDocumento ({body.DatiGenerali.DatiGeneraliDocumento.ImportoTotaleDocumento ?? 0}) non quadra con DatiRiepilogo ({SommaDatiRiepilogo(body)}) + Arrotondamento ({body.DatiGenerali.DatiGeneraliDocumento.Arrotondamento ?? 0})");
+            RuleFor(x => x.DatiGenerali.DatiGeneraliDocumento)
+                .Must((body, _) => NaturaAgainstError00445(body))
+                .When(x => x.DatiGenerali.DatiGeneraliDocumento.Data.CompareTo(_20210101) >= 0)
+                .WithMessage("A partire dal 01/01/2021 non è più ammesso il valore generico N2, N3 o N6 come codice natura dell’operazione")
+                .WithErrorCode("00445");
+
+        }
+
+        private bool NaturaAgainstError00445(FatturaElettronicaBody body)
+        {
+            var codiciNatura = new HashSet<string>() { "N2", "N3", "N6" };
+
+            // NaturaLinea
+            if (body.DatiBeniServizi.DettaglioLinee
+                .Where(l => !string.IsNullOrEmpty(l.Natura))
+                .Any(l => codiciNatura.Contains(l.Natura)))
+            {
+                return false;
+            }
+
+            // NaturaRiepilogo
+            if (body.DatiBeniServizi.DatiRiepilogo
+                .Where(l => !string.IsNullOrEmpty(l.Natura))
+                .Any(l => codiciNatura.Contains(l.Natura)))
+            {
+                return false;
+            }
+
+            // NaturaCassaPrev
+            if (body.DatiGenerali.DatiGeneraliDocumento.DatiCassaPrevidenziale
+                .Where(l => !string.IsNullOrEmpty(l.Natura))
+                .Any(l => codiciNatura.Contains(l.Natura)))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private bool DatiRitenutaAgainstDettaglioLinee(FatturaElettronicaBody body)
