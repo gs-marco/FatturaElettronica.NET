@@ -57,7 +57,7 @@ namespace FatturaElettronica.Validators
 
         }
 
-        private bool NaturaAgainstError00445(FatturaElettronicaBody body)
+        private static bool NaturaAgainstError00445(FatturaElettronicaBody body)
         {
             var codiciNatura = new HashSet<string>() { "N2", "N3", "N6" };
 
@@ -88,17 +88,12 @@ namespace FatturaElettronica.Validators
             return true;
         }
 
-        private bool DatiRitenutaAgainstDettaglioLinee(FatturaElettronicaBody body)
+        private static bool DatiRitenutaAgainstDettaglioLinee(FatturaElettronicaBody body)
         {
-            foreach (var linea in body.DatiBeniServizi.DettaglioLinee)
-            {
-                if (linea.Ritenuta == "SI") return false;
-            }
-
-            return true;
+            return body.DatiBeniServizi.DettaglioLinee.All(linea => linea.Ritenuta != "SI");
         }
 
-        private bool DatiRiepilogoValidateAgainstError00422(FatturaElettronicaBody body)
+        private static bool DatiRiepilogoValidateAgainstError00422(FatturaElettronicaBody body)
         {
             var totals = new Dictionary<decimal, Totals>();
 
@@ -127,42 +122,32 @@ namespace FatturaElettronica.Validators
                 totals[c.AliquotaIVA].ImportoContrCassa += c.ImportoContributoCassa;
             }
 
-            foreach (var t in totals.Values)
-            {
-                if (Math.Abs(t.ImponibileImporto - (t.PrezzoTotale + t.ImportoContrCassa + t.Arrotondamento)) >= 1)
-                    return false;
-            }
-
-            return true;
+            return totals.Values.All(t => Math.Abs(t.ImponibileImporto - (t.PrezzoTotale + t.ImportoContrCassa + t.Arrotondamento)) < 1);
         }
 
-        private bool DatiRiepilogoValidateAgainstError00419(FatturaElettronicaBody body)
+        private static bool DatiRiepilogoValidateAgainstError00419(FatturaElettronicaBody body)
         {
             var hash = new HashSet<decimal>();
-            foreach (var cp in body.DatiGenerali.DatiGeneraliDocumento.DatiCassaPrevidenziale)
-            {
-                if (!hash.Contains(cp.AliquotaIVA)) hash.Add(cp.AliquotaIVA);
-            }
+            foreach (var cp in body.DatiGenerali.DatiGeneraliDocumento.DatiCassaPrevidenziale.Where(cp => !hash.Contains(cp.AliquotaIVA)))
+                hash.Add(cp.AliquotaIVA);
 
-            foreach (var l in body.DatiBeniServizi.DettaglioLinee)
-            {
-                if (!hash.Contains(l.AliquotaIVA)) hash.Add(l.AliquotaIVA);
-            }
+            foreach (var l in body.DatiBeniServizi.DettaglioLinee.Where(l => !hash.Contains(l.AliquotaIVA)))
+                hash.Add(l.AliquotaIVA);
 
             return body.DatiBeniServizi.DatiRiepilogo.Count >= hash.Count;
         }
 
-        private bool ImportoTotaleDocumentoAgainstDatiRiepilogo(FatturaElettronicaBody body)
+        private static bool ImportoTotaleDocumentoAgainstDatiRiepilogo(FatturaElettronicaBody body)
         {
             return (body.DatiGenerali.DatiGeneraliDocumento.ImportoTotaleDocumento ?? 0) == SommaDatiRiepilogo(body) + (body.DatiGenerali.DatiGeneraliDocumento.Arrotondamento ?? 0);
         }
 
-        private decimal SommaDatiRiepilogo(FatturaElettronicaBody body)
+        private static decimal SommaDatiRiepilogo(FatturaElettronicaBody body)
         {
             return body.DatiBeniServizi.DatiRiepilogo.Sum(r => r.ImponibileImporto + r.Imposta);
         }
 
-        internal class Totals
+        private class Totals
         {
             public decimal ImponibileImporto;
             public decimal PrezzoTotale;
