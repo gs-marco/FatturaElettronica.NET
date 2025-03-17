@@ -100,7 +100,7 @@ namespace FatturaElettronica.Validators
             if (cedente.CodiceFiscale != cessionario.CodiceFiscale)
                 return true;
 
-            var tipiDocumento = new[] { "TD16", "TD17", "TD18", "TD19", "TD20" };
+            var tipiDocumento = new string[] { "TD01", "TD02", "TD03", "TD06", "TD16", "TD17", "TD18", "TD19", "TD20", "TD24", "TD25", "TD28" };
 
             return fatturaOrdinaria.FatturaElettronicaBody.All(x =>
                 !tipiDocumento.Contains(x.DatiGenerali.DatiGeneraliDocumento.TipoDocumento));
