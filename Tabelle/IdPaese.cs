@@ -92,7 +92,7 @@
                     new IdPaese { Nome = "Germania", Codice = "DE" },
                     new IdPaese { Nome = "Ghana", Codice = "GH" },
                     new IdPaese { Nome = "Gibilterra", Codice = "GI" },
-                    new IdPaese { Nome = "Grecia", Codice = "GR" },
+                    new IdPaese { Nome = "Grecia GR", Codice = "GR" },
                     new IdPaese { Nome = "Groenlandia", Codice = "GL" },
                     new IdPaese { Nome = "Grenada", Codice = "GD" },
                     new IdPaese { Nome = "Guadalupa", Codice = "GP" },
@@ -258,6 +258,8 @@
                     new IdPaese { Nome = "Zambia", Codice = "ZM" },
                     new IdPaese { Nome = "Zimbabwe", Codice = "ZW" },
                     new IdPaese { Nome = "Kosovo", Codice = "XK" },
+                    new IdPaese { Nome = "Campione d'Italia e Livigno", Codice = "OO" },
+                    new IdPaese { Nome = "Grecia EL", Codice = "EL" }
                 };
             }
         }
