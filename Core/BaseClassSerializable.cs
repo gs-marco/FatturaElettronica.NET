@@ -231,6 +231,9 @@ namespace FatturaElettronica.Core
             if (target == typeof(decimal) || target == typeof(decimal?))
                 return Convert.ToDecimal(value);
 
+            if (target == typeof(byte[]) && value.GetType().Equals(String.Empty.GetType()))
+                return Convert.FromBase64String((String)value);
+
             return value;
         }
 
