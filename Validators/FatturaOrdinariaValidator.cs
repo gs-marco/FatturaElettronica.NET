@@ -153,7 +153,9 @@ namespace FatturaElettronica.Validators
                 return true;
             }
 
-            return body.DatiBeniServizi.DettaglioLinee.Any(x => string.IsNullOrEmpty(x.Natura) && x.AliquotaIVA > 0);
+            return body.DatiBeniServizi.DettaglioLinee.All(x =>
+                x.AliquotaIVA > 0 && string.IsNullOrEmpty(x.Natura) ||
+                x.AliquotaIVA == 0 && !string.IsNullOrEmpty(x.Natura));
         }
 
         private bool BodyValidateAgainstError00430(FatturaElettronicaBody body)
@@ -163,7 +165,9 @@ namespace FatturaElettronica.Validators
                 return true;
             }
 
-            return body.DatiBeniServizi.DatiRiepilogo.Any(x => string.IsNullOrEmpty(x.Natura) && x.AliquotaIVA > 0);
+            return body.DatiBeniServizi.DatiRiepilogo.All(x =>
+                x.AliquotaIVA > 0 && string.IsNullOrEmpty(x.Natura) ||
+                x.AliquotaIVA == 0 && !string.IsNullOrEmpty(x.Natura));
         }
     }
 }
