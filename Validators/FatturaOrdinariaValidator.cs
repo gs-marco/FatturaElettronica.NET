@@ -74,9 +74,11 @@ namespace FatturaElettronica.Validators
 
         private static bool FatturaValidateAgainstError00472(FatturaOrdinaria fatturaOrdinaria)
         {
+            var tipiDocumento = new[] { "TD21", "TD27" };
+
             var bodies =
                 fatturaOrdinaria.FatturaElettronicaBody.Where(x =>
-                    x.DatiGenerali.DatiGeneraliDocumento.TipoDocumento == "TD21");
+                    tipiDocumento.Contains(x.DatiGenerali.DatiGeneraliDocumento.TipoDocumento));
 
             if (!bodies.Any())
                 return true;
@@ -100,7 +102,7 @@ namespace FatturaElettronica.Validators
             if (cedente.CodiceFiscale != cessionario.CodiceFiscale)
                 return true;
 
-            var tipiDocumento = new string[] { "TD01", "TD02", "TD03", "TD06", "TD16", "TD17", "TD18", "TD19", "TD20", "TD24", "TD25", "TD28" };
+            var tipiDocumento = new[] { "TD01", "TD02", "TD03", "TD06", "TD16", "TD17", "TD18", "TD19", "TD20", "TD24", "TD25", "TD28" };
 
             return fatturaOrdinaria.FatturaElettronicaBody.All(x =>
                 !tipiDocumento.Contains(x.DatiGenerali.DatiGeneraliDocumento.TipoDocumento));
