@@ -72,9 +72,8 @@ namespace FatturaElettronica.Validators
                 else
                     prezzo += importo;
             }
-
             return Math.Abs(Math.Round(challenge.PrezzoTotale, 2, MidpointRounding.AwayFromZero)
-                            - prezzo * (challenge.Quantita ?? 1)) <= 0.01m;
+                - prezzo * (challenge.Quantita ?? 1)) <= 0.019m;
         }
     }
 }
