@@ -105,6 +105,10 @@ namespace FatturaElettronica.Validators
             if (cessionario.IdFiscaleIVA.IsEmpty() && cessionario.CodiceFiscale == cedente.CodiceFiscale)
                 return true;
 
+            if (string.IsNullOrEmpty(cessionario.CodiceFiscale) &&
+                cedente.IdFiscaleIVA?.ToString() == cessionario.IdFiscaleIVA?.ToString())
+                return true;
+
             return cedente.IdFiscaleIVA?.ToString() == cessionario.IdFiscaleIVA?.ToString() &&
                    cedente.CodiceFiscale == cessionario.CodiceFiscale;
         }
