@@ -13,5 +13,10 @@ namespace FatturaElettronica.Extensions
         {
             return ruleBuilder.ScalePrecision(2, 13);
         }
+
+        public static void ScalePrecisionPercentualeDecimalType<T>(this IRuleBuilder<T, decimal?> ruleBuilder)
+        {
+            ruleBuilder.ScalePrecision(2, 6);
+        }
     }
 }
