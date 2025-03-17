@@ -108,18 +108,15 @@ namespace FatturaElettronica.Validators
 
         private static bool FatturaValidateAgainstError00471(FatturaOrdinaria fatturaOrdinaria)
         {
-            var cedente = fatturaOrdinaria.FatturaElettronicaHeader.CedentePrestatore.DatiAnagrafici;
-            var cessionario =
-                fatturaOrdinaria.FatturaElettronicaHeader.CessionarioCommittente.DatiAnagrafici;
+            var cedente = fatturaOrdinaria.FatturaElettronicaHeader.CedentePrestatore.DatiAnagrafici.IdFiscaleIVA.ToString();
+            var cessionario = fatturaOrdinaria.FatturaElettronicaHeader.CessionarioCommittente.DatiAnagrafici.IdFiscaleIVA.ToString();
 
-            if (cedente.IdFiscaleIVA?.ToString() != cessionario.IdFiscaleIVA?.ToString())
-                return true;
-            if (cedente.CodiceFiscale != cessionario.CodiceFiscale)
-                return true;
+            var tipiDocumento = new[]
+            {
+                "TD01", "TD02", "TD03", "TD06", "TD16", "TD17", "TD18", "TD19", "TD20", "TD24", "TD25", "TD28"
+            };
 
-            var tipiDocumento = new[] { "TD01", "TD02", "TD03", "TD06", "TD16", "TD17", "TD18", "TD19", "TD20", "TD24", "TD25", "TD28" };
-
-            return fatturaOrdinaria.FatturaElettronicaBody.All(x =>
+            return cedente != cessionario || fatturaOrdinaria.FatturaElettronicaBody.All(x =>
                 !tipiDocumento.Contains(x.DatiGenerali.DatiGeneraliDocumento.TipoDocumento));
         }
 
