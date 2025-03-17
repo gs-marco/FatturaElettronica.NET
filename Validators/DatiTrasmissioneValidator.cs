@@ -36,6 +36,7 @@ namespace FatturaElettronica.Validators
                 .When(x => x.ContattiTrasmittente != null && !x.ContattiTrasmittente.IsEmpty());
             RuleFor(dt => dt.PECDestinatario)
                 .Length(7, 256)
+                .Matches(Constants.EmailRegex)
                 .WithMessage("PECDestinatario deve avere lunghezza compresa tra 7 e 256 caratteri")
                 .WithErrorCode("00426");
             RuleFor(dt => dt.PECDestinatario)
