@@ -177,7 +177,6 @@
                     new Divisa{ Codice = "XOF", Nome = string.Empty},
                     new Divisa{ Codice = "XPD", Nome = string.Empty},
                     new Divisa{ Codice = "XPF", Nome = string.Empty},
-                    new Divisa{ Codice = "XPF", Nome = string.Empty},
                     new Divisa{ Codice = "XPT", Nome = string.Empty},
                     new Divisa{ Codice = "XSU", Nome = string.Empty},
                     new Divisa{ Codice = "XTS", Nome = string.Empty},
