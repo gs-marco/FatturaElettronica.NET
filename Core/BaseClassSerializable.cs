@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -447,7 +448,13 @@ namespace FatturaElettronica.Core
                 if (type == typeof(decimal?)) type = typeof(decimal);
                 if (type == typeof(int?)) type = typeof(int);
 
-                property.SetValue(this, r.ReadElementContentAs(type, null), null);
+                var content = r.ReadElementContentAs(type, null);
+                if (string.IsNullOrEmpty(content.ToString()))
+                {
+                    var defaultValue = property.GetCustomAttributes<DefaultValueAttribute>().FirstOrDefault()?.Value;
+                    if (defaultValue != null) content = defaultValue;
+                }
+                property.SetValue(this, content, null);
             }
 
             if (r.NodeType == XmlNodeType.Text) r.Skip();
