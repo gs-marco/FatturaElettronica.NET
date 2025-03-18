@@ -25,7 +25,8 @@
                     new RegimeFiscale { Codice = "RF16", Nome = "IVA per cassa P.A. (art.6, c.5, DPR 633/72 )"},
                     new RegimeFiscale { Codice = "RF17", Nome = "IVA per cassa (art. 32-bis, DL 83/2012)"},
                     new RegimeFiscale { Codice = "RF18", Nome = "Altro" },
-                    new RegimeFiscale { Codice = "RF19", Nome = "Regime forfettario (art.1, c.54-89, L. 190/2014 )" }
+                    new RegimeFiscale { Codice = "RF19", Nome = "Regime forfettario (art.1, c.54-89, L. 190/2014 )" },
+                    new RegimeFiscale { Codice = "RF20", Nome = "Regime transfrontaliero di Franchigia IVA (Direttiva UE 2020/285)" }
                 };
             }
         }

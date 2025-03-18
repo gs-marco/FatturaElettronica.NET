@@ -18,7 +18,7 @@
                     new TipoDocumento { Codice = "TD17", Nome = "integrazione/autofattura per acquisto servizi dall'estero" },
                     new TipoDocumento { Codice = "TD18", Nome = "integrazione per acquisto di beni intracomunitari" },
                     new TipoDocumento { Codice = "TD19", Nome = "integrazione/autofattura per acquisto di beni ex art. 17 c.2 DPR 633/72" },
-                    new TipoDocumento { Codice = "TD20", Nome = "autofattura per regolarizzazione e integrazione delle fatture (ex art.6 c.8 d.lgs. 471/97  o  art.46 c.5 D.L. 331/93)" },
+                    new TipoDocumento { Codice = "TD20", Nome = "autofattura per regolarizzazione e integrazione delle fatture (ex art. 6 c.9-bis d.lgs. 471/97 o art. 46 c.5 d.l. 331/93)" },
                     new TipoDocumento { Codice = "TD21", Nome = "autofattura per splafonamento" },
                     new TipoDocumento { Codice = "TD22", Nome = "estrazione beni da Deposito IVA" },
                     new TipoDocumento { Codice = "TD23", Nome = "estrazione beni da Deposito IVA con versamento dell'IVA" },
@@ -27,6 +27,7 @@
                     new TipoDocumento { Codice = "TD26", Nome = "cessione di beni ammortizzabili e per passaggi interni (ex art.36 DPR 633/72)" },
                     new TipoDocumento { Codice = "TD27", Nome = "fattura per autoconsumo o per cessioni gratuite senza rivalsa" },
                     new TipoDocumento { Codice = "TD28", Nome = "acquisti da San Marino con IVA (fattura cartacea)" },
+                    new TipoDocumento { Codice = "TD29", Nome = "comunicazione per omessa o irregolare fatturazione (art. 6, comma 8, D.Lgs. 471/97)" },
                 };
 
             }
